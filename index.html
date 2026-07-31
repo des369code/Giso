@@ -10,7 +10,6 @@
 <meta property="og:type" content="website">
 <meta property="og:image" content="og-card.png">
 <meta name="theme-color" content="#7879F1">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%237879F1'/%3E%3Crect x='14' y='14' width='36' height='36' rx='8' fill='white'/%3E%3C/svg%3E">
 <style>
   :root {
     /* DESIGN.md tokens — unchanged */
@@ -19,180 +18,70 @@
     --ink-3: #7A7A80;
     --accent: #7879F1;
     --hairline: #E0E0E0;
-    --rule: #F0F0F0;
     --success: #30D158;
-    --radius-card: 16px;
     --radius-btn: 12px;
-    --shadow-card: 0 2px 4px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.05);
-    --shadow-lift: 0 12px 32px rgba(0,0,0,.10);
   }
   * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; }
   body {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", sans-serif;
     background: #FFFFFF; color: var(--ink);
     -webkit-font-smoothing: antialiased; line-height: 1.5;
+    display: flex; align-items: center; justify-content: center;
+    padding: 24px;
   }
-  .page { max-width: 640px; margin: 0 auto; padding: 88px 24px 64px; }
+  .center { width: 100%; max-width: 640px; text-align: center; padding: 24px 0; }
 
-  /* ---------- hero ---------- */
-  .kicker { font-size: 12px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 28px; }
-  .kicker b { color: var(--accent); font-weight: 700; }
-  .kicker .sep { margin: 0 6px; color: var(--hairline); font-weight: 400; }
-  .headline { font-size: clamp(34px, 6.5vw, 52px); font-weight: 700; letter-spacing: -1.6px; line-height: 1.1; max-width: 560px; margin-bottom: 18px; }
-  .subline { font-size: 17px; color: var(--ink-2); max-width: 460px; line-height: 1.55; }
+  h1 { font-size: clamp(30px, 6vw, 42px); font-weight: 700; letter-spacing: -1.2px; line-height: 1.12; margin: 0 auto 18px; max-width: 620px; }
+  .sub { font-size: 17px; color: var(--ink-2); margin: 0 auto 32px; max-width: 460px; line-height: 1.55; }
 
-  /* ---------- the card (today's card, real) ---------- */
-  .card-zone { margin: 72px 0 0; }
-  .eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 16px; }
-  .eyebrow .live { color: var(--success); }
-  .card {
-    max-width: 480px;
-    background: #fff; border: 1px solid var(--hairline); border-radius: var(--radius-card);
-    padding: 22px; box-shadow: var(--shadow-lift);
-    display: flex; flex-direction: column; gap: 12px;
-    transition: opacity .2s;
-  }
-  .card.swap { opacity: 0; }
-  .card-title { font-size: 24px; font-weight: 700; letter-spacing: -0.6px; line-height: 1.2; }
-  .card-action { font-size: 15px; color: var(--ink-2); line-height: 1.5; }
-  .card-btn {
-    background: var(--accent); color: #fff; font-size: 15px; font-weight: 600; letter-spacing: -0.3px;
-    padding: 13px; border-radius: var(--radius-btn); text-align: center; line-height: 1.3;
-  }
-  .card-btn small { display: block; font-size: 12.5px; font-weight: 500; opacity: .85; margin-top: 1px; }
-  .card-meta { font-size: 13px; color: var(--ink-3); }
-  .card-note { font-size: 12.5px; color: var(--ink-3); margin-top: 14px; max-width: 480px; line-height: 1.5; }
-
-  /* ---------- signup ---------- */
-  .signup { margin-top: 72px; }
-  form { display: flex; flex-direction: column; gap: 12px; max-width: 480px; }
-  .field-row { display: flex; gap: 10px; }
+  form { max-width: 360px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; }
   .field {
-    flex: 1; font: inherit; font-size: 16px; color: var(--ink);
+    font: inherit; font-size: 16px; color: var(--ink);
     padding: 13px 16px; border: 1px solid var(--hairline); border-radius: var(--radius-btn);
-    background: #fff; min-width: 0;
+    background: #fff; text-align: center; width: 100%;
   }
   .field:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(120,121,241,.15); }
   .btn {
     font: inherit; font-size: 16px; font-weight: 600; letter-spacing: -0.3px;
     background: var(--accent); color: #fff;
-    padding: 13px 22px; border: none; border-radius: var(--radius-btn); cursor: pointer;
+    padding: 13px; border: none; border-radius: var(--radius-btn); cursor: pointer; width: 100%;
     transition: background .15s;
   }
   .btn:hover { background: #6667E0; }
   .btn:active { transform: scale(.98); }
   .btn:disabled { opacity: .6; cursor: default; }
   .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
-  .privacy { font-size: 12.5px; color: var(--ink-3); margin-top: 12px; }
-  .form-err { display: none; font-size: 13px; color: #C0392B; }
+  .form-err { display: none; font-size: 13px; color: #C0392B; margin-top: 4px; }
 
-  .form-ok { display: none; max-width: 480px; padding-top: 4px; }
+  .form-ok { display: none; max-width: 360px; margin: 0 auto; }
   .form-ok .tick { display: inline-grid; place-items: center; width: 40px; height: 40px; border-radius: 14px; background: var(--success); color: #fff; font-size: 20px; font-weight: 700; margin-bottom: 14px; }
   .form-ok h2 { font-size: 20px; font-weight: 600; letter-spacing: -0.4px; margin-bottom: 6px; }
   .form-ok p { font-size: 14px; color: var(--ink-2); }
   body.saved form { display: none; }
   body.saved .form-ok { display: block; }
-
-  /* ---------- how it works ---------- */
-  .steps { margin-top: 88px; border-top: 1px solid var(--rule); max-width: 480px; }
-  .step { display: grid; grid-template-columns: 32px 1fr; column-gap: 14px; padding: 20px 0; border-bottom: 1px solid var(--rule); }
-  .step-n { font-size: 14px; font-weight: 600; color: var(--ink-3); padding-top: 2px; }
-  .step h3 { font-size: 16px; font-weight: 600; letter-spacing: -0.3px; margin-bottom: 3px; }
-  .step p { font-size: 14px; color: var(--ink-2); line-height: 1.5; }
-
-  /* ---------- footer ---------- */
-  footer { margin-top: 88px; border-top: 1px solid var(--rule); padding-top: 20px; font-size: 13px; color: var(--ink-3); line-height: 1.7; }
-
-  @media (max-width: 520px) {
-    .page { padding-top: 64px; }
-    .field-row { flex-direction: column; }
-    .btn { width: 100%; }
-    .headline { font-size: 34px; letter-spacing: -1px; }
-  }
 </style>
 </head>
 <body>
 
-<main class="page">
+<div class="center">
+  <h1>Your saved reels have good ideas in them. None of them made it into your life.</h1>
+  <p class="sub">ReelRecall reads what you saved and hands you back one thing to do with it, once a day.</p>
 
-  <header>
-    <p class="kicker"><b>ReelRecall</b><span class="sep">·</span>waitlist open</p>
-    <h1 class="headline">Your saved reels have good ideas in them. None of them made it into your life.</h1>
-    <p class="subline">ReelRecall reads what you saved and hands you back one thing to do with it, once a day.</p>
-  </header>
-
-  <section class="card-zone">
-    <p class="eyebrow">Today's card <span class="live">·</span></p>
-    <article class="card" id="card" aria-live="polite">
-      <div class="card-title" id="card-title"></div>
-      <div class="card-action" id="card-action"></div>
-      <div class="card-btn" id="card-btn">Open the reel</div>
-      <div class="card-meta" id="card-meta"></div>
-    </article>
-    <p class="card-note">A real card from our alpha. It changes every day — that's the app.</p>
-  </section>
-
-  <section class="signup">
-    <form id="wl">
-      <div class="field-row">
-        <input class="field" type="email" id="email" name="email" placeholder="your@email.com" required autocomplete="email" aria-label="Email address">
-        <button class="btn" type="submit" id="join">Join the waitlist</button>
-      </div>
-      <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
-      <p class="privacy">We'll only email you when the app is ready. No spam, no sharing your email.</p>
-      <div class="form-err" id="err"></div>
-    </form>
-    <div class="form-ok" aria-live="polite">
-      <div class="tick">✓</div>
-      <h2>You're on the list</h2>
-      <p>Your first card will find you when we're ready.</p>
-    </div>
-  </section>
-
-  <section class="steps" aria-label="How it works">
-    <div class="step"><span class="step-n">1</span><div><h3>Share the reel</h3><p>The share sheet you already use. ReelRecall is right there.</p></div></div>
-    <div class="step"><span class="step-n">2</span><div><h3>Get your card</h3><p>We read it and write one: what it says, and one thing to do with it.</p></div></div>
-    <div class="step"><span class="step-n">3</span><div><h3>One card a day</h3><p>Every morning at 8:30, today's card — the thing you saved that you can actually use.</p></div></div>
-  </section>
-
-  <footer>
-    ReelRecall is in development. This page is a waitlist, not the app.<br>
-    Made for people who save and forget.
-  </footer>
-
-</main>
+  <form id="wl">
+    <input class="field" type="email" id="email" name="email" placeholder="your@email.com" required autocomplete="email" aria-label="Email address">
+    <button class="btn" type="submit" id="join">Join the waitlist</button>
+    <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <div class="form-err" id="err"></div>
+  </form>
+  <div class="form-ok" aria-live="polite">
+    <div class="tick">✓</div>
+    <h2>You're on the list</h2>
+    <p>Your first card will find you when we're ready.</p>
+  </div>
+</div>
 
 <script>
-  /* ---- today's card: real cards from the alpha spike, one per day ---- */
-  const CARDS = [
-    { title: "The 24-Hour Rule for Speed", action: "Set a 24-hour rule today: get every idea or request back to the sender within a day, not a week.", reason: "" },
-    { title: "Contagious: why users share apps", action: "Give your app a shareable win that flatters users when they post it.", reason: "the three examples he names" },
-    { title: "App Launch: Validate with Existing Winners", action: "Pick a successful app, add one feature, market before launch, and set a hard paywall.", reason: "" },
-    { title: "App Marketing: Viral Loops and AI UGC", action: "Use Orbit to automate AI UGC — open the reel for the Callie and push-up examples.", reason: "Callie and the push-up examples" },
-    { title: "Start with a Cool Project, Not a Startup", action: "Pick a project that genuinely excites you and start building it today, without worrying about monetization.", reason: "" },
-    { title: "Five MCPs that make Claude Code unstoppable", action: "Open the MCP marketplace in Claude Code and install Perplexity, Playwright, Firecrawl, Glyph, and Chrome MCPs.", reason: "" },
-    { title: "Manifest: act as if it's already done", action: "Write the 'so happy and grateful now' statement and say it daily.", reason: "McConaughey's check story" }
-  ];
-  function dayOfYear() {
-    const now = new Date();
-    return Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 86400000);
-  }
-  function showCard() {
-    const c = CARDS[dayOfYear() % CARDS.length];
-    const card = document.getElementById("card");
-    card.classList.add("swap");
-    setTimeout(() => {
-      document.getElementById("card-title").textContent = c.title;
-      document.getElementById("card-action").textContent = c.action;
-      document.getElementById("card-btn").innerHTML = c.reason
-        ? `Open the reel<small>${c.reason}</small>`
-        : "Open the reel";
-      document.getElementById("card-meta").textContent = "Saved 3 days ago";
-      card.classList.remove("swap");
-    }, 200);
-  }
-  showCard();
-
   /* ---- waitlist form → Supabase ---- */
   const SUPABASE_URL = "https://mxfaywcdsopxtehcgxgp.supabase.co";
   const SUPABASE_KEY = "sb_publishable_VIbwCBfUTyAtKaorXSoPDQ_5b0RBTX6";
