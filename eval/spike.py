@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""ReelRecall ingest spike harness (eval/ stage 1).
+"""Sift ingest spike harness (eval/ stage 1).
 
 Takes reel links from reels.txt, fetches each page, extracts the caption
 (og:description), runs the low-info classifier, asks Claude Haiku to write an
@@ -237,7 +237,7 @@ def main() -> int:
 
     sheet = BASE / f"grades-{datetime.now(timezone.utc).strftime('%Y%m%d-%H%M')}.md"
     lines = [
-        "# ReelRecall ingest spike — grading sheet",
+        "# Sift ingest spike — grading sheet",
         "",
         "Grade each card: **3** = genuinely useful / **2** = ok / **1** = garbage / **- (bare save)**. "
         "Fill Notes for failures. This decides caption-only vs transcription (gate).",

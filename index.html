@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>ReelRecall — your saved reels, finally used</title>
-<meta name="description" content="ReelRecall reads what you saved and hands you back one thing to do with it, once a day.">
-<meta property="og:title" content="ReelRecall — your saved reels, finally used">
-<meta property="og:description" content="ReelRecall reads what you saved and hands you back one thing to do with it, once a day.">
+<title>Sift — your saved reels, finally used</title>
+<meta name="description" content="Sift reads what you saved and hands you back one thing to do with it, once a day.">
+<meta property="og:title" content="Sift — your saved reels, finally used">
+<meta property="og:description" content="Sift reads what you saved and hands you back one thing to do with it, once a day.">
 <meta property="og:type" content="website">
 <meta property="og:image" content="og-card.png">
-<meta name="theme-color" content="#7879F1">
+<meta name="theme-color" content="#F5F5F7">
 <style>
   :root {
     /* DESIGN.md tokens — unchanged */
@@ -19,34 +19,56 @@
     --accent: #7879F1;
     --hairline: #E0E0E0;
     --success: #30D158;
+    --radius-card: 24px;
     --radius-btn: 12px;
+    /* page-level: Apple neutral so the white card floats */
+    --page-bg: #F5F5F7;
+    --shadow-lift: 0 20px 60px rgba(0,0,0,.12), 0 4px 14px rgba(0,0,0,.05);
+    --enter: cubic-bezier(.22,1,.36,1);
   }
   * { box-sizing: border-box; margin: 0; }
   html, body { height: 100%; }
   body {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", sans-serif;
-    background: #FFFFFF; color: var(--ink);
+    background: var(--page-bg); color: var(--ink);
     -webkit-font-smoothing: antialiased; line-height: 1.5;
     display: flex; align-items: center; justify-content: center;
     padding: 24px;
   }
-  .center { width: 100%; max-width: 640px; text-align: center; padding: 24px 0; }
 
-  h1 { font-size: clamp(30px, 6vw, 42px); font-weight: 700; letter-spacing: -1.2px; line-height: 1.12; margin: 0 auto 18px; max-width: 620px; }
-  .sub { font-size: 17px; color: var(--ink-2); margin: 0 auto 32px; max-width: 460px; line-height: 1.55; }
+  /* the card — the page is the product's one screen */
+  .card {
+    width: 100%; max-width: 480px;
+    background: #FFFFFF; border: 1px solid var(--hairline); border-radius: var(--radius-card);
+    box-shadow: var(--shadow-lift);
+    padding: 48px 44px 44px;
+    animation: settle .5s var(--enter) both;
+  }
+  @keyframes settle { from { transform: translateY(12px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) { .card { animation: none; } }
 
-  form { max-width: 360px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; }
+  .brand { display: flex; align-items: baseline; gap: 4px; font-size: 15px; font-weight: 600; letter-spacing: -0.2px; margin-bottom: 34px; }
+  .brand .dot { color: var(--accent); font-weight: 700; }
+
+  h1 { font-size: 34px; font-weight: 700; letter-spacing: -1px; line-height: 1.16; margin-bottom: 18px; }
+  h1 .period { color: var(--accent); }
+
+  .sub { font-size: 16px; color: var(--ink-2); line-height: 1.55; margin-bottom: 34px; max-width: 380px; }
+
+  form { display: flex; flex-direction: column; gap: 10px; }
   .field {
     font: inherit; font-size: 16px; color: var(--ink);
-    padding: 13px 16px; border: 1px solid var(--hairline); border-radius: var(--radius-btn);
-    background: #fff; text-align: center; width: 100%;
+    padding: 14px 16px; border: 1px solid var(--hairline); border-radius: var(--radius-btn);
+    background: #fff; width: 100%;
+    transition: border-color .15s;
   }
+  .field::placeholder { color: var(--ink-3); }
   .field:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(120,121,241,.15); }
   .btn {
     font: inherit; font-size: 16px; font-weight: 600; letter-spacing: -0.3px;
     background: var(--accent); color: #fff;
-    padding: 13px; border: none; border-radius: var(--radius-btn); cursor: pointer; width: 100%;
-    transition: background .15s;
+    padding: 14px; border: none; border-radius: var(--radius-btn); cursor: pointer; width: 100%;
+    transition: background .15s var(--enter);
   }
   .btn:hover { background: #6667E0; }
   .btn:active { transform: scale(.98); }
@@ -54,19 +76,25 @@
   .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
   .form-err { display: none; font-size: 13px; color: #C0392B; margin-top: 4px; }
 
-  .form-ok { display: none; max-width: 360px; margin: 0 auto; }
+  .form-ok { display: none; padding: 8px 0 2px; }
   .form-ok .tick { display: inline-grid; place-items: center; width: 40px; height: 40px; border-radius: 14px; background: var(--success); color: #fff; font-size: 20px; font-weight: 700; margin-bottom: 14px; }
   .form-ok h2 { font-size: 20px; font-weight: 600; letter-spacing: -0.4px; margin-bottom: 6px; }
   .form-ok p { font-size: 14px; color: var(--ink-2); }
   body.saved form { display: none; }
   body.saved .form-ok { display: block; }
+
+  @media (max-width: 520px) {
+    .card { padding: 40px 28px 36px; }
+    h1 { font-size: 30px; }
+  }
 </style>
 </head>
 <body>
 
-<div class="center">
-  <h1>Your saved reels have good ideas in them. None of them made it into your life.</h1>
-  <p class="sub">ReelRecall reads what you saved and hands you back one thing to do with it, once a day.</p>
+<div class="card">
+  <div class="brand">Sift<span class="dot">·</span></div>
+  <h1>Your saved reels have good ideas in them. None of them made it into your life<span class="period">.</span></h1>
+  <p class="sub">Sift reads what you saved and hands you back one thing to do with it, once a day.</p>
 
   <form id="wl">
     <input class="field" type="email" id="email" name="email" placeholder="your@email.com" required autocomplete="email" aria-label="Email address">

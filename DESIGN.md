@@ -1,6 +1,6 @@
-# Design System — ReelRecall
+# Design System — Sift
 
-The single source of truth for ReelRecall's look and feel. Approved by the founder, 2026-07-31 (design review + /design-consultation). Everything the build creates — app, share extension, widget, push — must use these values. Do not deviate without founder approval.
+The single source of truth for Sift's look and feel. Approved by the founder, 2026-07-31 (design review + /design-consultation). Everything the build creates — app, share extension, widget, push — must use these values. Do not deviate without founder approval.
 
 ## Product Context
 
@@ -70,7 +70,7 @@ The single source of truth for ReelRecall's look and feel. Approved by the found
 - **Approach:** One-screen app (D7). Card-is-the-screen (D6).
 - **Main screen anatomy (top to bottom):** brand + date header → kicker "Today's card" → THE CARD: title (hero) → action line (body) → video thumbnail (no play badge — see Icon & Imagery) → "Open the reel" accent button (the pull-back reason is the button label) → meta row (saved age, creator) → "✓ I did this" → collapsible "What are you working on?" context field below the card (D22).
 - **Settings:** gear top-right (settings, data deletion, context field). No bottom bar.
-- **Share extension:** capture surface, not a home. Three-branch state machine (D8): instant "Saved ✓" ≤1s → card upgrades in place ≤4s → "Saved — your card is ready shortly" + "Open ReelRecall" handoff (D21). Cancel discards the save (D24).
+- **Share extension:** capture surface, not a home. Three-branch state machine (D8): instant "Saved ✓" ≤1s → card upgrades in place ≤4s → "Saved — your card is ready shortly" + "Open Sift" handoff (D21). Cancel discards the save (D24).
 - **Push (D23):** 8:30am local, `Saved 3 days ago: {title} — {action}`. Tap → card screen. Widget shows the same card (push-permission-denied fallback).
 - **State table** (approved, plan Pass 2): loading = shimmer skeleton (no layout jump); empty first-run = "Share a reel from Instagram"; error = "This post is no longer available"; queue exhausted = "No cards left — share a reel to refill"; bare save = "Saved — it's in your queue."
 

@@ -1,4 +1,4 @@
-# ReelRecall — project notes
+# Sift — project notes
 
 ## Design System
 
