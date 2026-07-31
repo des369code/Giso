@@ -18,7 +18,7 @@ files_modified:
   - ~/.gstack/projects/SavedPostIdea/d.desmaanzephyll-unknown-design-20260731-172742.md
 ---
 
-## Working on: Sift MVP — spike complete, next: design review → motion demo → waitlist
+## Working on: Giso MVP — spike complete, next: design review → motion demo → waitlist
 
 ### Summary
 

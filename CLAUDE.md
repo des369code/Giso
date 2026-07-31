@@ -1,4 +1,4 @@
-# Sift — project notes
+# Giso — project notes
 
 ## Design System
 

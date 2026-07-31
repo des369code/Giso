@@ -1,6 +1,6 @@
-# TODOS — Sift MVP
+# TODOS — Giso MVP
 
-Deferred items from the design doc (`~/.gstack/projects/SavedPostIdea/d.desmaanzephyll-unknown-design-20260731-172742.md`) and CEO plan (`~/.gstack/projects/SavedPostIdea/ceo-plans/2026-07-31-sift-mvp.md`).
+Deferred items from the design doc (`~/.gstack/projects/SavedPostIdea/d.desmaanzephyll-unknown-design-20260731-172742.md`) and CEO plan (`~/.gstack/projects/SavedPostIdea/ceo-plans/2026-07-31-giso-mvp.md`).
 
 ## Pre-build gates (do before any code)
 - [ ] **G1 — Community survey (P1, ~30 min, POSTING RESTRICTED):** Post the question-format survey (docs/survey-posts.md — reframed as "is there an app that searches and reminds me of my saved posts" per founder preference) in r/ADHD, r/Instagram, r/datacurator, r/productivity. **Constraint (2026-07-31):** founder's Reddit account is new; r/productivity (and likely r/ADHD) block posts under 30 days. Order: r/datacurator now → r/Instagram if allowed → r/productivity + r/ADHD after account ages (aligns with Week-4 concierge/TestFlight recruiting). Build account history with genuine comments meanwhile (3 live r/productivity threads already exist on this topic; evidence logged in validation report addendum). Not the critical path — spike (G2) gates the build.

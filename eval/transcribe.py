@@ -74,7 +74,7 @@ def main() -> int:
 
     sheet = BASE / f"transcribes-{datetime.now(timezone.utc).strftime('%Y%m%d-%H%M')}.md"
     lines_out = [
-        "# Sift spike phase 2 — audio transcription",
+        "# Giso spike phase 2 — audio transcription",
         "",
         "Grade each card: 3 = genuinely useful / 2 = ok / 1 = garbage.",
         "",

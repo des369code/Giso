@@ -1,4 +1,4 @@
-# Sift ingest spike — one reel per line:  TYPE URL
+# Giso ingest spike — one reel per line:  TYPE URL
 # Types: TALKING_HEAD (educational, person speaking) / TEXT_IN_VIDEO / MUSIC_ONLY /
 #        MIXED / CAROUSEL (multi-image slide deck — first slide is the hook) /
 #        PHOTO (single image — expect bare save) / DELETED / SHORT_LINK (ig.me or instagr.am)
