@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ReelRecall — Today's Card · reference-app language</title>
+<style>
+  :root {
+    /* Design tokens extracted from the reference app by Gemini */
+    --bg-inner: #FFFFFF;
+    --surface-card: #FFFFFF;
+    --border-card: #E0E0E0;
+    --separator: #F0F0F0;
+    --text-primary: #1C1C1E;
+    --text-secondary: #6E6E73;
+    --text-tertiary: #A4A4A8;
+    --accent: #7879F1;
+    --white: #FFFFFF;
+    --black: #000000;
+    --placeholder: #E2E2E5;
+
+    --font: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", sans-serif;
+    --size-hero: 34px; --weight-hero: 700; --track-hero: -1.2px; --lh-hero: 1.2;
+    --size-section: 17px; --weight-section: 600; --track-section: -0.4px; --lh-section: 1.3;
+    --size-headline: 20px; --weight-headline: 600; --track-headline: -0.4px; --lh-headline: 1.3;
+    --size-body: 15px; --weight-body: 400; --track-body: -0.2px; --lh-body: 1.4;
+    --size-caption: 13px; --weight-caption: 400; --lh-caption: 1.3;
+    --size-button: 17px; --weight-button: 600; --track-button: -0.4px;
+
+    --margin-page: 16px;
+    --padding-card: 16px;
+    --gap-section: 24px;
+    --gap-element: 12px;
+
+    --radius-card: 16px;
+    --radius-button: 12px;
+    --radius-thumb: 8px;
+
+    --shadow-card: 0 2px 4px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.05);
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body { font-family: var(--font); background: #F0F0F2; padding: 32px 24px 64px; color: var(--text-primary); -webkit-font-smoothing: antialiased; }
+  h1 { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 4px; }
+  .sub { color: var(--text-secondary); font-size: 13px; margin-bottom: 20px; }
+  .tokens { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; }
+  .tokens .chip { font-size: 11.5px; color: var(--text-secondary); display: flex; align-items: center; gap: 6px; background: #fff; border: 1px solid var(--border-card); border-radius: 999px; padding: 5px 11px; box-shadow: var(--shadow-card); }
+  .tokens i { width: 13px; height: 13px; border-radius: 4px; display: inline-block; }
+  .row { display: flex; gap: 28px; flex-wrap: wrap; align-items: flex-start; }
+  .col { flex: 1 1 300px; max-width: 400px; }
+  .col > h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--text-secondary); margin-bottom: 10px; }
+  .iphone { width: 375px; background: var(--bg-inner); border-radius: 40px; overflow: hidden; position: relative; border: 8px solid #2C2C2E; box-shadow: 0 24px 60px rgba(0,0,0,.25); }
+  .status-bar { height: 44px; background: var(--white); border-bottom: 1px solid var(--separator); display: flex; justify-content: space-between; align-items: center; padding: 0 24px; font-size: 14px; font-weight: 600; }
+  .dynamic-island { width: 126px; height: 37px; background: var(--black); border-radius: 18.5px; position: absolute; left: 50%; top: 3px; transform: translateX(-50%); z-index: 2; }
+
+  .content { padding: var(--margin-page); display: flex; flex-direction: column; gap: var(--gap-section); }
+  .app-header { display: flex; align-items: center; gap: 10px; }
+  .app-icon { width: 36px; height: 36px; background: var(--accent); border-radius: 9px; display: grid; place-items: center; color: #fff; font-weight: 800; font-size: 17px; }
+  .app-header .titles { display: flex; flex-direction: column; }
+  .app-name { font-size: var(--size-headline); font-weight: var(--weight-headline); letter-spacing: var(--track-headline); line-height: 1.2; }
+  .app-date { font-size: var(--size-caption); color: var(--text-secondary); }
+  .kicker { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .6px; color: var(--text-secondary); }
+
+  .card { background: var(--surface-card); border: 1px solid var(--border-card); border-radius: var(--radius-card); padding: var(--padding-card); box-shadow: var(--shadow-card); display: flex; flex-direction: column; gap: var(--gap-element); }
+  .hero { font-size: var(--size-hero); font-weight: var(--weight-hero); letter-spacing: var(--track-hero); line-height: var(--lh-hero); }
+  .body { font-size: var(--size-body); font-weight: var(--weight-body); letter-spacing: var(--track-body); line-height: var(--lh-body); color: var(--text-primary); }
+  .caption { font-size: var(--size-caption); color: var(--text-secondary); }
+
+  .thumb { width: 100%; height: 190px; background: var(--placeholder); border-radius: var(--radius-thumb); display: grid; place-items: center; }
+  .play { width: 44px; height: 44px; background: rgba(255,255,255,.7); border-radius: 50%; display: grid; place-items: center; }
+  .play::before { content: ""; width: 0; height: 0; border-style: solid; border-width: 10px 0 10px 16px; border-color: transparent transparent transparent var(--accent); margin-left: 3px; }
+
+  .btn-accent { background: var(--accent); color: #fff; font-size: var(--size-button); font-weight: var(--weight-button); letter-spacing: var(--track-button); padding: 13px 14px; border-radius: var(--radius-button); text-align: center; line-height: 1.3; }
+  .btn-accent small { display: block; font-size: 13.5px; font-weight: 500; opacity: .85; letter-spacing: -0.2px; }
+  .card-footer { display: flex; justify-content: space-between; }
+  .done-row { display: flex; justify-content: center; margin-top: 4px; }
+  .btn-done { font-size: 15px; font-weight: 600; color: var(--accent); padding: 12px 20px; border-radius: var(--radius-button); }
+  .context { background: var(--surface-card); border: 1px solid var(--border-card); border-radius: var(--radius-card); padding: 13px 16px; box-shadow: var(--shadow-card); display: flex; align-items: center; justify-content: space-between; }
+  .context .l { display: flex; flex-direction: column; gap: 2px; }
+  .context .t { font-size: 14px; font-weight: 600; }
+  .context .hint { font-size: 12.5px; color: var(--text-tertiary); }
+  .context .chev { color: var(--text-tertiary); font-size: 14px; }
+  .note { font-size: 12.5px; color: var(--text-tertiary); margin-top: 14px; line-height: 1.45; }
+</style>
+</head>
+<body>
+<h1>ReelRecall — Today's card · reference-app language</h1>
+<p class="sub">Tokens extracted from your reference app by Gemini: light, white floating cards, purple accent, system type. Locked anatomy from the plan.</p>
+<div class="tokens">
+  <span class="chip"><i style="background:#FFFFFF;border:1px solid #E0E0E0"></i>bg white</span>
+  <span class="chip"><i style="background:#fff;border:1px solid #E0E0E0"></i>card #FFF</span>
+  <span class="chip"><i style="background:#1C1C1E"></i>primary</span>
+  <span class="chip"><i style="background:#6E6E73"></i>secondary</span>
+  <span class="chip"><i style="background:#7879F1"></i>accent #7879F1</span>
+  <span class="chip">radius 16/12/8</span>
+  <span class="chip">shadow soft</span>
+</div>
+<div class="row">
+  <div class="col">
+    <h2>Today's card — main screen</h2>
+    <div class="iphone">
+      <div class="dynamic-island"></div>
+      <div class="status-bar"><span>09:41</span><span>▮▯▮</span></div>
+      <div class="content">
+        <div class="app-header">
+          <div class="app-icon">R</div>
+          <div class="titles">
+            <span class="app-name">ReelRecall</span>
+            <span class="app-date">Wed, Jul 31</span>
+          </div>
+        </div>
+        <div class="kicker">Today's card</div>
+        <div class="card">
+          <div class="hero">Contagious: why users share apps</div>
+          <div class="body">Give your app a shareable win that flatters users when they post it.</div>
+          <div class="thumb"><div class="play"></div></div>
+          <div class="btn-accent">Open the reel<small>the three examples he names</small></div>
+          <div class="card-footer">
+            <span class="caption">Saved 3 days ago</span>
+            <span class="caption">@alexhormozi</span>
+          </div>
+          <div class="done-row"><span class="btn-done">✓ I did this</span></div>
+        </div>
+        <div class="context">
+          <div class="l"><span class="t">What are you working on?</span><span class="hint">e.g. launching my app</span></div>
+          <span class="chev">⌃</span>
+        </div>
+      </div>
+    </div>
+    <p class="note">Floating card on white background. No tabs, no extra chrome.</p>
+  </div>
+</div>
+</body>
+</html>

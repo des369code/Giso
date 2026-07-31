@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ReelRecall — Design consultation: motion + app icon</title>
+<style>
+  :root {
+    /* Locked tokens — do not change */
+    --surface-card: #FFFFFF;
+    --border-card: #E0E0E0;
+    --separator: #F0F0F0;
+    --text-primary: #1C1C1E;
+    --text-secondary: #6E6E73;
+    --text-tertiary: #7A7A80;
+    --accent: #7879F1;
+    --success: #30D158;
+    --placeholder: #E2E2E5;
+    --shadow-card: 0 2px 4px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.05);
+    --radius-card: 16px;
+    --radius-button: 12px;
+    --radius-thumb: 8px;
+    --enter: cubic-bezier(.16,1,.3,1);
+    --exit: cubic-bezier(.4,0,1,1);
+    --move: cubic-bezier(.45,0,.55,1);
+  }
+  * { box-sizing: border-box; margin: 0; }
+  body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif; background: #fff; color: var(--text-primary); -webkit-font-smoothing: antialiased; padding: 48px 32px 96px; max-width: 1020px; margin: 0 auto; }
+  h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; }
+  .sub { color: var(--text-secondary); font-size: 14px; margin: 6px 0 20px; max-width: 640px; line-height: 1.5; }
+  .tokens { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 44px; }
+  .tokens .chip { font-size: 12px; color: var(--text-secondary); display: flex; align-items: center; gap: 6px; background: #fff; border: 1px solid var(--border-card); border-radius: 999px; padding: 5px 11px; box-shadow: var(--shadow-card); }
+  .tokens i { width: 13px; height: 13px; border-radius: 4px; display: inline-block; }
+  section { margin-bottom: 56px; }
+  .sec-h { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: .09em; color: var(--text-secondary); margin-bottom: 6px; }
+  .sec-sub { font-size: 14px; color: var(--text-secondary); margin-bottom: 24px; max-width: 660px; line-height: 1.5; }
+
+  /* ---------- App icon ---------- */
+  .icon-row { display: flex; gap: 44px; flex-wrap: wrap; align-items: flex-start; }
+  .icon-card { display: flex; flex-direction: column; gap: 16px; width: 300px; }
+  .icon-canvas { border-radius: var(--radius-card); padding: 30px 24px; display: flex; flex-direction: column; gap: 22px; align-items: center; }
+  .icon-canvas.light { background: #fff; border: 1px solid var(--border-card); }
+  .icon-canvas.dark { background: #101014; }
+  .size-row { display: flex; gap: 18px; align-items: flex-end; }
+  .size-cell { display: flex; flex-direction: column; gap: 6px; align-items: center; }
+  .size-cell span { font-size: 11px; color: var(--text-tertiary); }
+  .icon-name { font-size: 15px; font-weight: 600; }
+  .icon-note { font-size: 12.5px; color: var(--text-secondary); line-height: 1.55; }
+  .rec { font-size: 11px; font-weight: 700; color: var(--accent); background: rgba(120,121,241,.08); border: 1px solid rgba(120,121,241,.3); padding: 3px 9px; border-radius: 999px; display: inline-block; width: fit-content; }
+
+  /* iOS icon shape */
+  .ios { border-radius: 24%; overflow: hidden; position: relative; box-shadow: 0 6px 20px rgba(0,0,0,.14); }
+  .ios.s120 { width: 120px; height: 120px; }
+  .ios.s60 { width: 60px; height: 60px; }
+  .ios.s29 { width: 29px; height: 29px; }
+
+  /* A: purple field, floating white card */
+  .ic-a { background: var(--accent); }
+  .ic-a .card { position: absolute; left: 21%; top: 21%; width: 58%; height: 58%; background: #fff; border-radius: 22%; box-shadow: 0 10px 18px rgba(0,0,0,.22), 0 3px 6px rgba(0,0,0,.14); }
+  .ic-a .play { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 22%; height: 22%; }
+
+  /* B: white field, purple tile */
+  .ic-b { background: #fff; border: 1.5px solid var(--border-card); }
+  .ic-b .tile { position: absolute; left: 18%; top: 18%; width: 64%; height: 64%; background: var(--accent); border-radius: 20%; }
+  .ic-b .play { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 24%; height: 24%; }
+
+  /* C: purple field, glyph only */
+  .ic-c { background: var(--accent); }
+  .ic-c .play { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 34%; height: 34%; }
+
+  /* D: white field, thick purple ring + white check (outside voice: "ReelCheck") */
+  .ic-d { background: #fff; border: 1.5px solid var(--border-card); }
+  .ic-d .ring { position: absolute; left: 14%; top: 14%; width: 72%; height: 72%; border-radius: 50%; background: var(--accent); }
+  .ic-d .check { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 46%; height: 46%; }
+
+  /* E: white field, reel frame with bottom fade (founder's note: no play triangle, show the video with a fade/blur at the end) */
+  .ic-e { background: #fff; border: 1.5px solid var(--border-card); }
+  .ic-e .frame { position: absolute; left: 12%; top: 12%; width: 76%; height: 76%; border-radius: 14%; overflow: hidden; }
+  .ic-e .scene { position: absolute; inset: 0; background: #D8DAFB; }
+  .ic-e .sun { position: absolute; left: 16%; top: 16%; width: 24%; height: 24%; border-radius: 50%; background: var(--accent); }
+  .ic-e .hill { position: absolute; left: -8%; bottom: 8%; width: 116%; height: 42%; border-radius: 50% 50% 0 0; background: #C4C6F0; }
+  .ic-e .fade { position: absolute; left: 0; right: 0; bottom: 0; height: 52%; background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,.95)); }
+
+  /* scene + fade for in-app thumbnails (no play badge) */
+  .scene { position: relative; height: 100%; width: 100%; background: #D8DAFB; overflow: hidden; }
+  .scene .sun { position: absolute; left: 14%; top: 14%; width: 26%; height: 26%; border-radius: 50%; background: var(--accent); }
+  .scene .hill { position: absolute; left: -6%; bottom: -4%; width: 112%; height: 46%; border-radius: 50% 50% 0 0; background: #C4C6F0; }
+  .scene .fade { position: absolute; left: 0; right: 0; bottom: 0; height: 55%; background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,.95)); }
+
+  /* ---------- Motion demos ---------- */
+  .demo { display: flex; gap: 32px; flex-wrap: wrap; align-items: flex-start; }
+  .demo-stage { flex: 0 0 310px; }
+  .phone { width: 310px; background: #fff; border: 1px solid var(--border-card); border-radius: 28px; padding: 22px; box-shadow: 0 12px 32px rgba(0,0,0,.1); position: relative; overflow: hidden; }
+  .demo-meta { font-size: 12px; color: var(--text-tertiary); margin-top: 10px; line-height: 1.55; }
+  .demo-meta b { color: var(--text-secondary); font-weight: 600; }
+  .replay { font-size: 13px; font-weight: 600; color: var(--accent); background: #fff; border: 1px solid rgba(120,121,241,.4); border-radius: 999px; padding: 7px 16px; cursor: pointer; margin-top: 12px; }
+  .replay:hover { background: rgba(120,121,241,.06); }
+
+  /* layer engine */
+  .seq { position: relative; }
+  .seq .layer { position: absolute; top: 0; left: 0; right: 0; opacity: 0; pointer-events: none; }
+  .seq .layer.on { opacity: 1; pointer-events: auto; transition: opacity .15s var(--exit); }
+  #seq1 { min-height: 360px; }
+  #seq2 { min-height: 330px; }
+  #seq3 { min-height: 300px; }
+  #seq4 { min-height: 130px; }
+
+  /* per-layer inner animations — run when the layer is live */
+  .layer.on .check-svg .box { animation: popIn .3s var(--enter) both; }
+  .layer.on .check-svg .path { animation: checkDraw .25s var(--exit) .05s both; }
+  .layer.on .card-land { animation: slideUp .3s var(--enter) both; }
+  .layer.on .thumb-in { animation: thumbPop .25s var(--enter) .2s both; }
+  .layer.on .grey-out { animation: greyCard .3s var(--exit) both; }
+  .layer.on .done-pop { animation: popIn .2s var(--enter) both; }
+  .layer.on .chev-anim { animation: chevSpin .2s var(--move) both; }
+  .layer.on .grow-anim { animation: growBox .25s var(--move) both; overflow: hidden; }
+  .layer.on .header-fade { animation: fadeIn .15s var(--exit) both; }
+
+  @keyframes checkDraw { from { stroke-dashoffset: 60; } to { stroke-dashoffset: 0; } }
+  @keyframes popIn { 0% { transform: scale(.8); opacity: 0; } 60% { transform: scale(1.08); } 100% { transform: scale(1); opacity: 1; } }
+  @keyframes slideUp { from { transform: translateY(14px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes greyCard { to { filter: grayscale(.9) opacity(.72); } }
+  @keyframes thumbPop { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes chevSpin { to { transform: rotate(180deg); } }
+  @keyframes growBox { from { max-height: 0; opacity: 0; } to { max-height: 140px; opacity: 1; } }
+
+  /* ---- demo content ---- */
+  .ext-state { display: flex; flex-direction: column; align-items: center; gap: 12px; padding: 34px 12px 18px; }
+  .ext-kicker { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: var(--text-secondary); }
+  .ext-title { font-size: 17px; font-weight: 600; }
+  .ext-sub { font-size: 13px; color: var(--text-secondary); }
+  .ext-card { width: 100%; background: #fff; border: 1px solid var(--border-card); border-radius: var(--radius-card); padding: 14px; box-shadow: var(--shadow-card); display: flex; flex-direction: column; gap: 9px; }
+  .ext-hero { font-size: 17px; font-weight: 700; letter-spacing: -0.3px; line-height: 1.25; }
+  .ext-body { font-size: 13px; color: var(--text-secondary); line-height: 1.4; }
+  .ext-thumb { height: 84px; background: var(--placeholder); border-radius: var(--radius-thumb); overflow: hidden; }
+  .ext-btn { background: var(--accent); color: #fff; font-size: 14px; font-weight: 600; padding: 11px; border-radius: var(--radius-button); text-align: center; line-height: 1.3; }
+  .ext-btn small { display: block; font-size: 12px; font-weight: 500; opacity: .85; }
+  .ext-handoff { font-size: 13px; font-weight: 600; color: var(--accent); text-align: center; padding: 6px; }
+
+  .app-header { display: flex; align-items: center; gap: 10px; padding-bottom: 14px; }
+  .app-badge { width: 34px; height: 34px; background: var(--accent); border-radius: 9px; display: grid; place-items: center; color: #fff; font-weight: 800; font-size: 16px; }
+  .app-name { font-size: 17px; font-weight: 600; letter-spacing: -0.3px; }
+  .app-date { font-size: 12.5px; color: var(--text-secondary); }
+
+  .card-mini { width: 100%; background: #fff; border: 1px solid var(--border-card); border-radius: var(--radius-card); padding: 14px; box-shadow: var(--shadow-card); display: flex; flex-direction: column; gap: 9px; }
+  .mini-hero { font-size: 16px; font-weight: 700; letter-spacing: -0.3px; line-height: 1.25; }
+  .mini-body { font-size: 13px; color: var(--text-secondary); line-height: 1.4; }
+  .mini-thumb { height: 84px; background: var(--placeholder); border-radius: var(--radius-thumb); overflow: hidden; }
+  .mini-btn { background: var(--accent); color: #fff; font-size: 14px; font-weight: 600; padding: 11px; border-radius: var(--radius-button); text-align: center; line-height: 1.3; }
+  .mini-done { font-size: 14px; font-weight: 600; color: var(--accent); text-align: center; padding: 9px; }
+  .mini-done .tick { display: inline-block; }
+
+  .context-box { width: 100%; border: 1px solid var(--border-card); border-radius: var(--radius-card); padding: 13px 16px; box-shadow: var(--shadow-card); display: flex; align-items: center; justify-content: space-between; background: #fff; }
+  .context-box .l { display: flex; flex-direction: column; gap: 2px; }
+  .context-box .t { font-size: 14px; font-weight: 600; }
+  .context-box .hint { font-size: 12.5px; color: var(--text-tertiary); }
+  .context-box .chev { color: var(--text-tertiary); font-size: 14px; display: inline-block; }
+  .context-body { font-size: 13px; color: var(--text-secondary); line-height: 1.5; padding: 12px 2px 4px; }
+  .stage-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: var(--text-tertiary); margin-bottom: 8px; }
+  .foot { font-size: 12px; color: var(--text-tertiary); line-height: 1.6; border-top: 1px solid var(--separator); padding-top: 18px; max-width: 660px; }
+</style>
+</head>
+<body>
+
+<h1>ReelRecall — motion + app icon</h1>
+<p class="sub">Proposals for your review, built on the locked look (light, white cards, purple #7879F1, system type). Nothing here changes the approved screens — this adds the app's <b>movement</b> and its <b>face on the Home Screen</b>. Press replay to watch any demo again.</p>
+<div class="tokens">
+  <span class="chip"><i style="background:#FFFFFF;border:1px solid #E0E0E0"></i>bg white</span>
+  <span class="chip"><i style="background:#1C1C1E"></i>primary</span>
+  <span class="chip"><i style="background:#7879F1"></i>accent #7879F1</span>
+  <span class="chip"><i style="background:#30D158"></i>success</span>
+  <span class="chip">radius 16/12/8</span>
+  <span class="chip">system type</span>
+</div>
+
+<section>
+  <div class="sec-h">1 · App icon — three candidates</div>
+  <p class="sec-sub">The rule for app icons: it must still be readable at 29px (notification size). Each candidate is shown at 120 / 60 / 29 px on white, and at full size on a dark wallpaper — your icon is light, like the app itself. <b>E is new</b> — built from your note: no play triangle anywhere, the icon shows the video itself, fading out at the end. A, B and C are retired (all carry the play triangle you rejected).</p>
+  <div class="icon-row">
+
+    <div class="icon-card">
+      <div class="icon-canvas light">
+        <div class="size-row">
+          <div class="size-cell"><div class="ios ic-e s120"><div class="frame"><div class="scene"><div class="sun"></div><div class="hill"></div><div class="fade"></div></div></div></div><span>120px</span></div>
+          <div class="size-cell"><div class="ios ic-e s60"><div class="frame"><div class="scene"><div class="sun"></div><div class="hill"></div><div class="fade"></div></div></div></div><span>60px</span></div>
+          <div class="size-cell"><div class="ios ic-e s29"><div class="frame"><div class="scene"><div class="sun"></div><div class="hill"></div><div class="fade"></div></div></div></div><span>29px</span></div>
+        </div>
+      </div>
+      <div class="icon-canvas dark">
+        <div class="ios ic-e s120"><div class="frame"><div class="scene"><div class="sun"></div><div class="hill"></div><div class="fade"></div></div></div></div>
+      </div>
+      <span class="rec">E · from your note</span>
+      <div class="icon-name">The reel frame</div>
+      <div class="icon-note">White background, the reel itself inside a thin purple frame — and the video ends in a soft fade to white. No play triangle anywhere. This is the pull-back promise in one shape: the payoff lives in the video, fading out until you open it. The scene inside is a placeholder — the real frame would carry your own style.</div>
+    </div>
+
+    <div class="icon-card">
+      <div class="icon-canvas light">
+        <div class="size-row">
+          <div class="size-cell"><div class="ios ic-d s120"><div class="ring"></div><svg class="check" viewBox="0 0 24 24"><path d="M6.5 12.5l4 4 7.5-8" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>120px</span></div>
+          <div class="size-cell"><div class="ios ic-d s60"><div class="ring"></div><svg class="check" viewBox="0 0 24 24"><path d="M6.5 12.5l4 4 7.5-8" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>60px</span></div>
+          <div class="size-cell"><div class="ios ic-d s29"><div class="ring"></div><svg class="check" viewBox="0 0 24 24"><path d="M6.5 12.5l4 4 7.5-8" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span>29px</span></div>
+        </div>
+      </div>
+      <div class="icon-canvas dark">
+        <div class="ios ic-d s120"><div class="ring"></div><svg class="check" viewBox="0 0 24 24"><path d="M6.5 12.5l4 4 7.5-8" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+      <span class="rec">D · recommended</span>
+      <div class="icon-name">ReelCheck</div>
+      <div class="icon-note">White field, one thick purple ring, a chunky white check inside. No play triangle at all — that's the mark of every generic video app. This icon tells the product's story in one shape: save the reel, tick the card. It reads like a "done" badge, which is exactly the feeling the app sells. The strongest of the four at 29px.</div>
+    </div>
+
+    <div class="icon-card">
+      <div class="icon-canvas light">
+        <div class="size-row">
+          <div class="size-cell"><div class="ios ic-a s120"><div class="card"></div><svg class="play" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="#7879F1"/></svg></div><span>120px</span></div>
+          <div class="size-cell"><div class="ios ic-a s60"><div class="card"></div><svg class="play" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="#7879F1"/></svg></div><span>60px</span></div>
+          <div class="size-cell"><div class="ios ic-a s29"><div class="card"></div><svg class="play" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="#7879F1"/></svg></div><span>29px</span></div>
+        </div>
+      </div>
+      <div class="icon-canvas dark">
+        <div class="ios ic-a s120"><div class="card"></div><svg class="play" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="#7879F1"/></svg></div>
+      </div>
+      <span class="rec" style="background:#fff;color:var(--text-tertiary);border-color:var(--border-card);">retired · play triangle</span>
+      <div class="icon-name">Floating card</div>
+      <div class="icon-note">Purple background, the app's white card floating on it, purple play triangle. The literal promise of the product: a saved reel, held up for you. Reads clearly at all three sizes; the card's shadow gives depth without breaking the flat look.</div>
+    </div>
+
+    <div class="icon-card">
+      <div class="icon-canvas light">
+        <div class="size-row">
+          <div class="size-cell"><div class="ios ic-b s120"><div class="tile"></div><svg class="play" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="#FFFFFF"/></svg></div><span>120px</span></div>
+          <div class="size-cell"><div class="ios ic-b s60"><div class="tile"></div><svg class="play" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="#FFFFFF"/></svg></div><span>60px</span></div>
+          <div class="size-cell"><div class="ios ic-b s29"><div class="tile"></div><svg class="play" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="#FFFFFF"/></svg></div><span>29px</span></div>
+        </div>
+      </div>
+      <div class="icon-canvas dark">
+        <div class="ios ic-b s120"><div class="tile"></div><svg class="play" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="#FFFFFF"/></svg></div>
+      </div>
+      <span class="rec" style="background:#fff;color:var(--text-tertiary);border-color:var(--border-card);">retired · play triangle</span>
+      <div class="icon-name">Purple tile</div>
+      <div class="icon-note">White background, one solid purple card with a white play triangle. The most minimal read — two shapes, maximum contrast. At 29px it becomes a purple square with a white notch; simple, but loses the "floating" story that makes the app distinctive.</div>
+    </div>
+
+    <div class="icon-card">
+      <div class="icon-canvas light">
+        <div class="size-row">
+          <div class="size-cell"><div class="ios ic-c s120"><svg class="play" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="#FFFFFF"/></svg></div><span>120px</span></div>
+          <div class="size-cell"><div class="ios ic-c s60"><svg class="play" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="#FFFFFF"/></svg></div><span>60px</span></div>
+          <div class="size-cell"><div class="ios ic-c s29"><svg class="play" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="#FFFFFF"/></svg></div><span>29px</span></div>
+        </div>
+      </div>
+      <div class="icon-canvas dark">
+        <div class="ios ic-c s120"><svg class="play" viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="#FFFFFF"/></svg></div>
+      </div>
+      <span class="rec" style="background:#fff;color:var(--text-tertiary);border-color:var(--border-card);">retired · play triangle</span>
+      <div class="icon-name">Play glyph</div>
+      <div class="icon-note">Just a chunky white play triangle on purple. The safest, most universal "video" mark. Risk: it reads like a generic media app — it says nothing about cards, saves, or recall. The fallback if A and B both feel like too much.</div>
+    </div>
+
+  </div>
+</section>
+
+<section>
+  <div class="sec-h">2 · Motion — four moments, live</div>
+  <p class="sec-sub">One rule holds everywhere: <b>no movement lasts longer than 400ms</b>, and every entrance settles rather than bounces — calm, like the look. The single expressive moment in the whole app is the card landing in the share sheet (demo 1). Haptics do the rest.</p>
+
+  <div class="demo">
+    <div class="demo-stage">
+      <div class="stage-label">Demo 1 · Share sheet — the signature moment</div>
+      <div class="phone">
+        <div class="seq" id="seq1">
+          <div class="layer">
+            <div class="ext-state"><div class="ext-kicker">Sharing to ReelRecall</div>
+              <div class="ext-title">Saved ✓</div>
+              <div class="ext-sub">Next card in 3 days</div>
+            </div>
+          </div>
+          <div class="layer">
+            <div class="ext-state">
+              <svg class="ext-check check-svg" viewBox="0 0 44 44" style="width:44px;height:44px;"><rect class="box" x="2" y="2" width="40" height="40" rx="14" fill="#30D158"/><path class="path" d="M13 23l6.5 6.5L32 16.5" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="60" stroke-dashoffset="60"/></svg>
+              <div class="ext-title">Saved ✓</div>
+              <div class="ext-sub">Your card is ready</div>
+            </div>
+          </div>
+          <div class="layer">
+            <div class="ext-card card-land">
+              <div class="ext-hero">Contagious: why users share apps</div>
+              <div class="ext-body">Give your app a shareable win that flatters users when they post it.</div>
+              <div class="ext-thumb thumb-in"><div class="scene"><div class="sun"></div><div class="hill"></div><div class="fade"></div></div></div>
+              <div class="ext-btn">Open the reel<small>the three examples he names</small></div>
+            </div>
+          </div>
+          <div class="layer">
+            <div class="ext-state"><div class="ext-kicker">Sharing to ReelRecall</div>
+              <div class="ext-title">Saved — your card is ready shortly</div>
+              <div class="ext-handoff">Open ReelRecall</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="demo-meta"><b>Sequence:</b> instant ✓ (0.25s stroke) → the shimmer becomes the card (0.3s — the same skeleton lines morph into text, nothing replaces anything) → handoff text fades (0.2s). This is the ≤1s / ≤4s / &gt;4s state machine from the approved design, timed. The shimmer→card morph is the app's one signature moment: a reel becoming something you can do. The thumbnail shows the video with a bottom fade — no play triangle (your note).</div>
+      <button class="replay" data-seq="seq1">Replay demo 1</button>
+    </div>
+
+    <div class="demo-stage">
+      <div class="stage-label">Demo 2 · Card screen — opening &amp; day change</div>
+      <div class="phone">
+        <div class="seq" id="seq2">
+          <div class="layer header-fade">
+            <div class="app-header">
+              <div class="app-badge">R</div>
+              <div><div class="app-name">ReelRecall</div><div class="app-date">Thu, Jul 31</div></div>
+            </div>
+          </div>
+          <div class="layer card-land">
+            <div class="card-mini">
+              <div class="mini-hero">Contagious: why users share apps</div>
+              <div class="mini-body">Give your app a shareable win that flatters users when they post it.</div>
+              <div class="mini-thumb"><div class="scene"><div class="sun"></div><div class="hill"></div><div class="fade"></div></div></div>
+              <div class="mini-btn">Open the reel — the three examples he names</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="demo-meta"><b>Opening:</b> header fades (0.15s), then the card rises 14pt and settles (0.3s). <b>New day:</b> the same card motion, crossfaded over the old card (0.3s). The card arriving is always the same quiet gesture.</div>
+      <button class="replay" data-seq="seq2">Replay demo 2</button>
+    </div>
+
+    <div class="demo-stage">
+      <div class="stage-label">Demo 3 · “✓ I did this”</div>
+      <div class="phone">
+        <div class="seq" id="seq3">
+          <div class="layer">
+            <div class="card-mini">
+              <div class="mini-hero">Contagious: why users share apps</div>
+              <div class="mini-body">Give your app a shareable win that flatters users when they post it.</div>
+              <div class="mini-thumb"><div class="scene"><div class="sun"></div><div class="hill"></div><div class="fade"></div></div></div>
+              <div class="mini-done"><span class="tick">✓</span> I did this</div>
+            </div>
+          </div>
+          <div class="layer">
+            <div class="card-mini grey-out">
+              <div class="mini-hero">Contagious: why users share apps</div>
+              <div class="mini-body">Give your app a shareable win that flatters users when they post it.</div>
+              <div class="mini-thumb"><div class="scene"><div class="sun"></div><div class="hill"></div><div class="fade"></div></div></div>
+              <div class="mini-done"><span class="tick done-pop">✓</span> I did this</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="demo-meta"><b>Applied:</b> checkmark pops (0.2s) with a medium haptic, the card greys over 0.3s. Grey = done, quiet. This feeds the paywall value recap at the end of the trial.</div>
+      <button class="replay" data-seq="seq3">Replay demo 3</button>
+    </div>
+
+    <div class="demo-stage">
+      <div class="stage-label">Demo 4 · “What are you working on?”</div>
+      <div class="phone">
+        <div class="seq" id="seq4">
+          <div class="layer">
+            <div class="context-box"><div class="l"><span class="t">What are you working on?</span><span class="hint">e.g. launching my app</span></div><span class="chev chev-anim">⌃</span></div>
+            <div class="context-body grow-anim">Telling ReelRecall your goal makes it pick the daily card that matters to it.</div>
+          </div>
+        </div>
+      </div>
+      <div class="demo-meta"><b>Expand:</b> chevron rotates (0.2s), the panel unfolds (0.25s). Nothing jumps — the card above never moves.</div>
+      <button class="replay" data-seq="seq4">Replay demo 4</button>
+    </div>
+  </div>
+</section>
+
+<div class="foot">Reduce motion is honored everywhere: when a user has it on, demos 1–3 become instant fades, the loading shimmer stops pulsing, and only the checkmark still draws. All timings live in one place (motion tokens) so the build never invents its own.</div>
+
+<script>
+  // timeline per demo: [timeInMs, activeLayerIndex]
+  const demos = {
+    seq1: [[0,0],[700,1],[1400,2],[2300,3]],
+    seq2: [[0,0],[300,1]],
+    seq3: [[0,0],[700,1]],
+    seq4: [[0,0]]
+  };
+  function runSeq(id, plan) {
+    const seq = document.getElementById(id);
+    const token = (seq._t = (seq._t || 0) + 1);
+    seq.querySelectorAll('.layer').forEach(l => l.classList.remove('on'));
+    plan.forEach(([at, layer]) => setTimeout(() => {
+      if (seq._t !== token) return;
+      seq.querySelectorAll('.layer').forEach((l, i) => l.classList.toggle('on', i === layer));
+    }, at));
+  }
+  document.querySelectorAll('.replay').forEach(b =>
+    b.addEventListener('click', () => runSeq(b.dataset.seq, demos[b.dataset.seq])));
+  window.addEventListener('load', () => setTimeout(() => runSeq('seq1', demos.seq1), 500));
+</script>
+</body>
+</html>
