@@ -1,0 +1,23 @@
+# ReelRecall ingest spike — one reel per line:  TYPE URL
+# Types: TALKING_HEAD (educational, person speaking) / TEXT_IN_VIDEO / MUSIC_ONLY /
+#        MIXED / CAROUSEL (multi-image slide deck — first slide is the hook) /
+#        PHOTO (single image — expect bare save) / DELETED / SHORT_LINK (ig.me or instagr.am)
+# Founder's 10 links, 2026-07-31. Type column is a best guess — correct it when grading.
+REEL https://www.instagram.com/reel/DbRpGZAIa4-/?igsh=MWhleTgybmk2bTFidA==
+CAROUSEL https://www.instagram.com/p/DbaeuS8kizV/?igsh=MXd5YXNmbzl5N3VoYw==
+REEL https://www.instagram.com/reel/DauxXTtu2v_/?igsh=dzR3b3BmOTFrbWty
+REEL https://www.instagram.com/reel/DbQN0R9SfES/?igsh=NzFpN2U3ZWk1YjJt
+REEL https://www.instagram.com/reel/DbCXqZ4Cgz3/?igsh=MXJ5ODR2cHpxeDBocw==
+REEL https://www.instagram.com/reel/Dax8uqyzVWv/?igsh=NW8xOHJvdDU2cXp5
+REEL https://www.instagram.com/reel/DZN5tk1SkIp/?igsh=MXc4am5sNGZkaGh1cA==
+CAROUSEL https://www.instagram.com/p/Da-0PERja75/?igsh=MTUxZjlpOWhrcjFncA==
+REEL https://www.instagram.com/reel/Da7sNE6sEf-/?igsh=aW00M2l2ZXpubW9o
+REEL https://www.instagram.com/reel/Dax1fctMjlm/?igsh=MW5yODRpYWh1bmFoNw==
+# Run 2 — talking-head reels (founder-provided, 2026-07-31)
+TALKING_HEAD https://www.instagram.com/reel/DbJLfHEkZsz/?igsh=aXZpa29nZWkyNDMz
+TALKING_HEAD https://www.instagram.com/reel/Da5_bQqpOto/?igsh=MXZ6eWl6dTlubW81cw==
+TALKING_HEAD https://www.instagram.com/reel/Da9hCJBNmxI/?igsh=MTZtZ3Y3dnZxdXR3OA==
+TALKING_HEAD https://www.instagram.com/reel/Da8kXZmstes/?igsh=Y2gwcTR4dTZudW5z
+TALKING_HEAD https://www.instagram.com/reel/Da8U7PbvD_X/?igsh=cDEwYWViN3VzMDAw
+TALKING_HEAD https://www.instagram.com/reel/Da6cLdrqPxF/?igsh=bHpjMXB0NW80ejN6
+TALKING_HEAD https://www.instagram.com/reel/DZ1Fzx2hB1k/?igsh=MTVybWl2cjNwaWszYg==

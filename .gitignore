@@ -1,0 +1,26 @@
+# macOS
+.DS_Store
+
+# gstack local tool state
+.gstack/
+
+# machine-specific Claude prefs
+.claude/settings.local.json
+
+# Python (eval scripts)
+__pycache__/
+*.pyc
+
+# Spike downloads / models — regenerable via yt-dlp + whisper
+eval/audio/
+eval/models/
+
+# iOS build (Xcode)
+xcuserdata/
+DerivedData/
+*.xcuserstate
+.build/
+.swiftpm/
+
+# web (future landing page)
+node_modules/
